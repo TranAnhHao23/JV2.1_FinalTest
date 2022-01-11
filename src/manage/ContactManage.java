@@ -23,7 +23,6 @@ public class ContactManage {
     public Contact creatContact() {
         System.out.println("Nhập số điện thoại (9 hoặc 10 số) : ");
         String phoneNumber = sc.nextLine();
-//        if (checkRegexPhoneNumber(phoneNumber)){
         if (checkPhoneNumber(phoneNumber)) {
             System.out.println("Số điện thoại đã được lưu trong danh bạ");
             return null;
@@ -40,16 +39,23 @@ public class ContactManage {
         String dateOfBirth = sc.nextLine();
         System.out.println("Email : ");
         String email = sc.nextLine();
-        return new Contact(phoneNumber, group, name, gender, address, dateOfBirth, email);
+        if (checkRegexPhoneNumber(phoneNumber) && checkRegexEmail(email)) {
+            return new Contact(phoneNumber, group, name, gender, address, dateOfBirth, email);
+        } else {
+            System.out.println("Lỗi số điện thoại hoặc email");
+            return null;
+        }
     }
 
     public void addContact() {
         Contact contact = creatContact();
-        if (!checkPhoneNumber(contact.getPhoneNumber()) || contact == null) {
+        if (contact != null) {
             contacts.add(contact);
             writeCSV(contacts);
-        } else {
             System.out.println("Thêm vào danh bạ thành công!");
+
+        } else {
+            System.out.println("Thêm vào danh bạ không thành công!");
         }
     }
 
@@ -86,7 +92,7 @@ public class ContactManage {
         if (checkPhoneNumber(phoneNumber)) {
             for (Contact contact : contacts) {
                 if (contact.getPhoneNumber().equals(phoneNumber)) {
-                    System.out.println("Bạn có muốn xóa (Y/N)");
+                    System.out.println("Bạn có muốn xóa (Y)");
                     String select = sc.nextLine();
                     if (select.equalsIgnoreCase("Y")) {
                         contacts.remove(contact);
@@ -104,7 +110,7 @@ public class ContactManage {
 
     public ArrayList<Contact> findContact(String findInput) {
         ArrayList<Contact> contactsList = new ArrayList<>();
-        System.out.println("Bạn muốn tìm theo tên hay theo nhóm? (1 để tìm theo tên, 2 để tìm theo nhóm)");
+        System.out.println("Bạn muốn tìm theo số hay theo nhóm? (1 để tìm theo số, 2 để tìm theo nhóm)");
         int choice = sc.nextInt();
         sc.nextLine();
         String regex = ".*" + findInput + ".*";
@@ -112,7 +118,7 @@ public class ContactManage {
         Matcher matcher;
         if (choice == 1) {
             for (Contact contact : contacts) {
-                matcher = pattern.matcher(contact.getName());
+                matcher = pattern.matcher(contact.getPhoneNumber());
                 if (matcher.find()) {
                     contactsList.add(contact);
                 }
