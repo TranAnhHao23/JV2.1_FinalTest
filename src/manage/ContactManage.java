@@ -60,6 +60,7 @@ public class ContactManage {
     }
 
     public void updateContact(String phoneNumber) {
+//        String phoneNumber = sc.nextLine();
         if (checkPhoneNumber(phoneNumber)) {
             System.out.println("Nhập nhóm mới: ");
             String group = sc.nextLine();
@@ -72,19 +73,31 @@ public class ContactManage {
             System.out.println("Ngày sinh mới: ");
             String dateOfBirth = sc.nextLine();
             System.out.println("Email mới: ");
+            String email = sc.nextLine();
             for (Contact contact : contacts) {
                 if (contact.getPhoneNumber().equals(phoneNumber)) {
-                    contact.setGroup(group);
-                    contact.setName(name);
-                    contact.setGender(gender);
-                    contact.setAddress(address);
-                    contact.setDateOfBirth(dateOfBirth);
+                    if (checkRegexPhoneNumber(phoneNumber) && checkRegexEmail(email)){
+                        contact.setGroup(group);
+                        contact.setName(name);
+                        contact.setGender(gender);
+                        contact.setAddress(address);
+                        contact.setDateOfBirth(dateOfBirth);
+                        contact.setEmail(email);
+                    } else {
+                        System.out.println("Lại sai số hoặc email nữa rồi");
+                    }
                 }
             }
             writeCSV(contacts);
             System.out.println("Cập nhật thành công!");
         } else {
-            System.out.println("Không tìm được danh bạ với số điện thoại trên.");
+            String phoneNumber2;
+            do {
+                phoneNumber2 = sc.nextLine();
+                System.out.println("Không tìm được danh bạ với số điện thoại trên.");
+                System.out.println("Nhập lại");
+                updateContact(phoneNumber2);
+            } while (!phoneNumber2.equals(""));
         }
     }
 
