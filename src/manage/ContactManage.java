@@ -111,6 +111,7 @@ public class ContactManage {
                         contacts.remove(contact);
                         writeCSV(contacts);
                         System.out.println("Xóa thành công!");
+                        return;
                     } else {
                         System.out.println("Không xóa số này!");
                     }

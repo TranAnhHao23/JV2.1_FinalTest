@@ -12,8 +12,8 @@ public class Main {
         ContactManage contactManage = new ContactManage();
         int choice;
         boolean check = true;
-        while (check) {
-            try {
+//        while (check) {
+//            try {
                 do {
                     System.out.println("----CHƯƠNG TRÌNH QUẢN LÝ DANH BẠ----");
                     System.out.println("Chọn chức năng theo số (để tiếp tục): ");
@@ -80,9 +80,9 @@ public class Main {
                             break;
                     }
                 } while (choice != 8);
-            } catch (Exception e) {
-                System.err.println(e.getMessage());
-            }
-        }
+//            } catch (Exception e) {
+//                System.err.println(e.getMessage());
+//            }
+//        }
     }
 }
